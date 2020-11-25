@@ -1,4 +1,4 @@
-name: lint
+name: build
 
 on:
   pull_request:
@@ -12,10 +12,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: Front-end lint
+      - name: Front-end build
         run: |
           npm install
-          npm run lint
+          npm run build
   backend:
     runs-on: ubuntu-latest
     steps:
@@ -26,12 +26,10 @@ jobs:
       - uses: actions/setup-go@v1
         with:
           go-version: '^1.15.5'
-      - name: Back-end lint
+      - name: Back-end build
         run: |
           go version
-          go get -u golang.org/x/lint/golint
-          export GOLINT=$(go list -f {{.Target}} golang.org/x/lint/golint)
           npm install
-          ${GOLINT} src/jetstream/...
-          # TODO - Once lint issues are fixed
-          #./deploy/ci/travis/update-go-report-card.sh
+          npm run build-backend
+
+# TODO: Add an upload job to upload the build
