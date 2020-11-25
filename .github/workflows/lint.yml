@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - uses: actions/setup-goe@v1
+      - uses: actions/setup-go@v1
         with:
           go-version: '^1.15.5'
       - name: Back-end lint
