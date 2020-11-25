@@ -30,7 +30,7 @@ jobs:
         run: |
           go version
           go get -u golang.org/x/lint/golint
-          go list -f {{.Target}} golang.org/x/lint/golint
+          export GOLINT=$(go list -f {{.Target}} golang.org/x/lint/golint)
           npm install
-          golint src/jetstream/...
-          ./deploy/ci/travis/update-go-report-card.sh
+          ${GOLINT} src/jetstream/...
+          #./deploy/ci/travis/update-go-report-card.sh
