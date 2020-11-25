@@ -15,6 +15,7 @@ jobs:
       - name: Front-end build
         run: |
           npm install
+          export HEADLESS=true
           npm run test
           npm run codecov
 
