@@ -1,0 +1,34 @@
+name: lint
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Front-end lint
+        run: |
+          npm install
+          npm run lint
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - uses: actions/setup-goe@v1
+        with:
+          go-version: '^1.15.5'
+      - name: Back-end lint
+        run: |
+          npm install
+          go get -u golang.org/x/lint/golint
+          golint src/jetstream/...
+          ./deploy/ci/travis/update-go-report-card.sh
