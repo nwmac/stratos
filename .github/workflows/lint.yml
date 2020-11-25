@@ -28,7 +28,9 @@ jobs:
           go-version: '^1.15.5'
       - name: Back-end lint
         run: |
-          npm install
+          go version
           go get -u golang.org/x/lint/golint
+          go list -f {{.Target}} golang.org/x/lint/golint
+          npm install
           golint src/jetstream/...
           ./deploy/ci/travis/update-go-report-card.sh
