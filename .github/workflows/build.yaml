@@ -16,6 +16,12 @@ jobs:
         run: |
           npm install
           npm run build
+          tar -czf frontend.tgz dist
+      - name: Upload frontend build
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend.tgz
+          path: frontend.tgz
   backend:
     runs-on: ubuntu-latest
     steps:
@@ -31,5 +37,8 @@ jobs:
           go version
           npm install
           npm run build-backend
-
-# TODO: Add an upload job to upload the build
+      - name: Upload backend build
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend
+          path: src/jetstream/jetstream
